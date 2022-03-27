@@ -5,8 +5,12 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan');
+const bodyParser = require('body-parser')
+
 // import routes
 const { routeConfig } = require('./routes/index')
+const fileRouter = require('./routes/file')
+const { userRouter } = require('./routes/user')
 
 // Kết nối DB
 const db = require('./configs/db')
@@ -17,11 +21,11 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', "ejs")
 
 // Middleware
-app.use(logger('tiny'))
+app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
 app.use(cookieParser())
-app.set('trust proxy', 1) // trust first proxy
 app.use(session({
     secret: 'mit',
     resave: false,
@@ -34,10 +38,14 @@ app.use(flash())
 app.use(function(req, res, next) {
     res.locals.error_messages = req.flash('error')
     res.locals.success_messages = req.flash('success')
+        // res.locals.user = req.flash('user')
     next()
 })
 
 // Đường dẫn gốc
+app.use('/static', express.static(__dirname + '/uploadsFile'))
+app.use('/files', fileRouter);
+app.use('/users', userRouter);
 app.use('/', routeConfig);
 
 // Ko tìm thấy đường dẫn

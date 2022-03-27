@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="/register" method="post">
+    <form action="/login" method="post">
         <div>
             <label for="">UserName</label>
             <input type="text" name="username">
@@ -20,15 +20,10 @@
             <input type="text" name="password">
         </div>
         <br>
-        <div>
-            <label for="">RePassword</label>
-            <input type="text" name="re-password">
-        </div>
-        <br>
         <p style="color: red;">
             <%= error_messages%>
         </p>
-        <button type="submit">Register</button>
+        <button type="submit">login</button>
 
     </form>
 </body>

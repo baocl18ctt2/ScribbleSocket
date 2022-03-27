@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        div {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Home</h1>
+    <div>
+
+    </div>
+    <p>UserName:
+        <%= user.username%>
+    </p>
+    <p>Display Name:
+        <%= user.displayName%>
+    </p>
+    <% if (uploadFile !=" " ) { %>
+        <img src="/static/<%= uploadFile%>" style="width: 100px; height: 100px; border-radius: 50%;">
+        <% } %>
+            <form action="/files/upload" method="post" enctype="multipart/form-data">
+                <label for=""> Avatar:</label>
+                <input type="file" name="avatar">
+                <button type="submit">Upload File</button>
+            </form>
+            <!-- Form cập nhật thông tin user -->
+            <form action="/users/update" method="post">
+                <label for="displayName"></label>
+                <input type="hidden" name="avatar" value="<%= uploadFile%>" />
+                <span>Display Name</span>
+                <input type="text" name="displayName" placeholder="Please fill in display name ">
+                <button type="submit" style="color: red;">Update</button>
+            </form>
+
+</body>
+
+</html>

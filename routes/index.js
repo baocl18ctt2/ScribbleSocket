@@ -1,9 +1,11 @@
 const express = require('express')
 const routeConfig = express.Router()
 const path = require('path')
+const { checkSession } = require('../controller/index')
+const { createNewUser, checkLoginUser } = require('../controller/user')
 routeConfig.route('/')
-    .get((req, res, next) => {
-        res.render('index')
+    .get(checkSession, (req, res, next) => {
+        res.render('index', { user: req.flash('user')[0] })
     })
 
 routeConfig.route('/register')
@@ -11,15 +13,12 @@ routeConfig.route('/register')
         req.flash("error", "username and password is required12")
         res.render('register')
     })
-    .post((req, res, next) => {
-        const { username, password } = req.body
-        if (!username || !password) {
-            console.log(username, password)
-            req.flash('error', 'username and password is required')
-            res.render('register')
-            return false
-        }
-        res.send('ok')
+    .post(createNewUser)
+
+routeConfig.route('/login')
+    .get((req, res, next) => {
+        res.render('login')
     })
+    .post(checkLoginUser)
 
 module.exports = { routeConfig }
