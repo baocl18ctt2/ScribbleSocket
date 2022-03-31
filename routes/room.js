@@ -4,8 +4,8 @@ const { checkSession } = require('../controller/auth')
 const { createRoom } = require('../controller/room')
 
 roomRouter.route('/Create')
-    .get(checkSession, (req, res, next) => {
-        res.send('create room OK')
+    .get((req, res, next) => {
+        res.render('play')
     })
     .post(createRoom)
 

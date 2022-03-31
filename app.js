@@ -20,6 +20,7 @@ db.connectDb()
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', "ejs")
 app.use(express.static(__dirname + '/assets'))
+app.use(express.static(__dirname + '/component'))
 
 // Middleware
 app.use(logger('dev'))
