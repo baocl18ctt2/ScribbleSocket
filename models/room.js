@@ -7,7 +7,7 @@ const RoomSchema = new Schema({
     maxPlayer: {},
     chat: [{
         message: { type: String },
-        messageType: { type: string },
+        messageType: { type: String },
     }],
     owner: {
         type: Schema.Types.ObjectId,

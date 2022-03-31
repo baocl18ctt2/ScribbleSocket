@@ -1,8 +1,9 @@
 const express = require('express')
 const routeConfig = express.Router()
 const path = require('path')
-const { checkSession } = require('../controller/index')
+const { checkSession } = require('../controller/auth')
 const { createNewUser, checkLoginUser } = require('../controller/user')
+
 routeConfig.route('/')
     .get(checkSession, (req, res, next) => {
         res.render('index', { user: req.flash('user')[0] })
@@ -21,4 +22,8 @@ routeConfig.route('/login')
     })
     .post(checkLoginUser)
 
+routeConfig.route('/player')
+    .get((req, res, next) => {
+        res.render('play')
+    })
 module.exports = { routeConfig }

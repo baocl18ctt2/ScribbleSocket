@@ -5,12 +5,12 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan');
-const bodyParser = require('body-parser')
 
 // import routes
 const { routeConfig } = require('./routes/index')
-const fileRouter = require('./routes/file')
+const uploadAvatarRouter = require('./routes/uploadAvatar')
 const { userRouter } = require('./routes/user')
+const { roomRouter } = require('./routes/room')
 
 // Kết nối DB
 const db = require('./configs/db')
@@ -19,6 +19,7 @@ db.connectDb()
 // Cài đặt môi trường view engines
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', "ejs")
+app.use(express.static(__dirname + '/assets'))
 
 // Middleware
 app.use(logger('dev'))
@@ -44,8 +45,9 @@ app.use(function(req, res, next) {
 
 // Đường dẫn gốc
 app.use('/static', express.static(__dirname + '/uploadsFile'))
-app.use('/files', fileRouter);
+app.use('/files', uploadAvatarRouter);
 app.use('/users', userRouter);
+app.use('/rooms', roomRouter);
 app.use('/', routeConfig);
 
 // Ko tìm thấy đường dẫn

@@ -27,6 +27,7 @@
     <% if (uploadFile !=" " ) { %>
         <img src="/static/<%= uploadFile%>" style="width: 100px; height: 100px; border-radius: 50%;">
         <% } %>
+            <!-- Form upload Avatar -->
             <form action="/files/upload" method="post" enctype="multipart/form-data">
                 <label for=""> Avatar:</label>
                 <input type="file" name="avatar">
@@ -40,7 +41,9 @@
                 <input type="text" name="displayName" placeholder="Please fill in display name ">
                 <button type="submit" style="color: red;">Update</button>
             </form>
-
+            <form action="/rooms/Create" method="post">
+                <button type="submit">Create Room</button>
+            </form>
 </body>
 
 </html>

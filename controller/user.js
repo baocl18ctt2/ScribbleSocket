@@ -72,4 +72,21 @@ const updateInfoUser = async(req, res, next) => {
     }
 }
 
-module.exports = { createNewUser, checkLoginUser, updateInfoUser }
+const getDetailUser = async(req, res, next) => {
+    try {
+        const { UserId } = req.params;
+        // Tìm user theo userID và trả về thông tin
+        const user = await UserModel.findById(UserId);
+        if (!user) {
+            throw new Error('User is not founded');
+        }
+        return res.json({
+            username: user.username,
+            displayName: user.displayName
+        })
+    } catch (error) {
+        next(error);
+    }
+
+}
+module.exports = { createNewUser, checkLoginUser, updateInfoUser, getDetailUser }

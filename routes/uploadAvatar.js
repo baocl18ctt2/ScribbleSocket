@@ -1,7 +1,7 @@
 const express = require('express')
 const fileRouter = express.Router()
-const uploadFiles = require('../controller/file')
-const { checkSession } = require('../controller/index')
+const uploadFiles = require('../controller/uploadAvatar')
+const { checkSession } = require('../controller/auth')
 
 fileRouter.route('/upload')
     .get(checkSession, (req, res, next) => {
