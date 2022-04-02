@@ -51,6 +51,7 @@ const updateInfoUser = async(req, res, next) => {
     try {
         // Lấy thông tin body
         const { avatar, displayName } = req.body;
+        console.log('body', req.body);
         // Lấy ra thông tin user lưu trong session
         const user = req.session.user;
         // Tìm user trong db

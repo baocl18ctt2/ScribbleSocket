@@ -4,7 +4,31 @@ const path = require('path')
 const flash = require('connect-flash')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-const logger = require('morgan');
+const logger = require('morgan')
+const socket = require('socket.io')
+const cors = require('cors')
+
+// Gọi đến server khác
+const http = require('http')
+const server = http.createServer(app)
+server.listen(8888)
+const io = socket(server, {
+    cors: {
+        origin: '*',
+        methods: ["GET", "POST"],
+    }
+})
+
+io.on("connection", (socket) => {
+    console.log('socket', socket.id)
+    socket.on('start', function(result) {
+        console.log(result)
+        io.emit('startFromServer', result)
+    });
+    socket.on('draw', (result) => {
+        io.emit('startDrawFromServer', result)
+    })
+})
 
 // import routes
 const { routeConfig } = require('./routes/index')
@@ -19,11 +43,15 @@ db.connectDb()
 // Cài đặt môi trường view engines
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', "ejs")
+
+// Đường dẫn gốc
+app.use('/static', express.static(__dirname + '/uploadsFile'))
 app.use(express.static(__dirname + '/assets'))
 app.use(express.static(__dirname + '/component'))
 
 // Middleware
 app.use(logger('dev'))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
@@ -44,8 +72,7 @@ app.use(function(req, res, next) {
     next()
 })
 
-// Đường dẫn gốc
-app.use('/static', express.static(__dirname + '/uploadsFile'))
+// Thiết lập router
 app.use('/files', uploadAvatarRouter);
 app.use('/users', userRouter);
 app.use('/rooms', roomRouter);
