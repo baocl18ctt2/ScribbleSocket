@@ -12,7 +12,7 @@ let restoreDraw = [];
 let restoreIndex = -1;
 
 
-canvas.width = 500;
+canvas.width = 600;
 canvas.height = 400;
 
 const ctx = canvas.getContext('2d')

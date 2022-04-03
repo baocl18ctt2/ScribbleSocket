@@ -19,8 +19,21 @@ body {
     display: inline-block;
 }
 
+#chat {
+    margin-left: 10px;
+}
+
 .chat-wrapper {
-    height: 410px;
+    width: 350px;
+    height: 400px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+.chat-tools {
+    margin-top: 10px;
+}
+
+input#chat-content {
+    width: 300px;
 }
