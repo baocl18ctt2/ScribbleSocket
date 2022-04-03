@@ -20,13 +20,42 @@ const io = socket(server, {
 })
 
 io.on("connection", (socket) => {
-    console.log('socket', socket.id)
+    console.log('socket', socket.id);
+    // Socket gửi socket.id
+    socket.emit('setInstance', { id: socket.id });
+    // Lắng nghe sự kiện start và gửi lại thông tin cho các client khác
     socket.on('start', function(result) {
-        console.log(result)
-        io.emit('startFromServer', result)
+        console.log('re', result)
+        io.emit('startFromServer', { socketId: socket.id, ...result })
     });
+    // Lắng nghe sự kiện draw và gửi lại thông tin cho các client khác
     socket.on('draw', (result) => {
-        io.emit('startDrawFromServer', result)
+        console.log('re1', result)
+        io.emit('startDrawFromServer', { socketId: socket.id, ...result })
+    });
+    // Lắng nghe sự kiện stop
+    socket.on('stop', function(result) {
+        io.emit("stopFromServer", {...result, socketId: socket.id })
+    });
+    // Lắng nghe sự kiện thay đổi màu
+    socket.on("changeColor", function(result) {
+        io.emit("changeColorFromServer", {...result, socketId: socket.id })
+    });
+    // Lắng nghe sự kiện thay đổi tăng giảm kích cỡ vẽ
+    socket.on("changeThinDrawer", function(result) {
+        io.emit("changeThinDrawerFromServer", {...result, socketId: socket.id })
+    });
+    // Lắng nghe sự kiện clear
+    socket.on("clear", function(result) {
+        io.emit("clearFromServer", {...result, socketId: socket.id })
+    });
+    // Lắng nghe sự kiện undo
+    socket.on("undo", function(result) {
+        io.emit("undoFromServer", {...result, socketId: socket.id })
+    });
+    // Lắng nghe sự kiện chat
+    socket.on("sendChat", function(result) {
+        io.emit("sendChatFromServer", {...result, socketId: socket.id })
     })
 })
 

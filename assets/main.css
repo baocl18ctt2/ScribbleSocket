@@ -18,3 +18,9 @@ body {
     border: 2px solid #fff;
     display: inline-block;
 }
+
+.chat-wrapper {
+    height: 410px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
